@@ -3,6 +3,9 @@
   --text: #1f2328;
   --border: #d0d7de;
   --header-bg: #f6f8fa;
+  --delayed-bg: #fff1f0;
+  --delayed-badge: #cf222e;
+  --muted: #8c959f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -11,6 +14,9 @@
     --text: #e6edf3;
     --border: #30363d;
     --header-bg: #161b22;
+    --delayed-bg: #2d1416;
+    --delayed-badge: #da3633;
+    --muted: #6e7681;
   }
 }
 
@@ -36,6 +42,22 @@ h1 {
   font-size: 1.5rem;
 }
 
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter select {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -46,9 +68,50 @@ td {
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   text-align: left;
+  /* 한글이 단어 중간에서 끊기지 않게 띄어쓰기에서만 줄바꿈 */
+  word-break: keep-all;
+}
+
+/* 제목 줄, 담당자, 기한은 한 줄로 */
+th,
+td:nth-child(2),
+td:nth-child(3) {
+  white-space: nowrap;
+}
+
+/* 아주 긴 일정 이름은 넘치지 않고 줄바꿈 */
+td:first-child {
+  overflow-wrap: anywhere;
+}
+
+/* 좁은 화면에서는 칸 좌우 여백만 줄인다 (글자 크기는 그대로) */
+@media (max-width: 480px) {
+  th,
+  td {
+    padding: 8px 6px;
+  }
 }
 
 th {
   background: var(--header-bg);
   font-weight: 600;
+}
+
+tr.done {
+  color: var(--muted);
+}
+
+tr.delayed {
+  background: var(--delayed-bg);
+}
+
+.badge-delayed {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--delayed-badge);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
